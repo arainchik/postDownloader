@@ -9,6 +9,9 @@ import json
 import sys
 import csv
 import json
+import logging
+
+logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
 
 parser = argparse.ArgumentParser()
@@ -41,7 +44,7 @@ args = parser.parse_args()
 # you can change out the below lines to set a custom start and end date. The script works backwards, so the end date has to be before the start date
 start_time = datetime.utcnow()  # datetime.strptime("10/05/2021", "%m/%d/%Y")
 # end_time = None  # datetime.strptime("09/25/2021", "%m/%d/%Y")
-end_time = datetime.strptime("12/13/2023", "%m/%d/%Y")
+end_time = datetime.strptime("12/01/2023", "%m/%d/%Y")
 
 convert_to_ascii = False  # don't touch this unless you know what you're doing
 convert_thread_id_to_base_ten = (
@@ -138,6 +141,7 @@ def download_from_url(
     break_out = False
     while True:
         new_url = url_base + str(previous_epoch)
+        logging.debug(f"Requesting url: {new_url}")
         req = urllib.request.Request(new_url, headers={'User-Agent': 'curl/7.64.1'})
 
         # json_text = requests.get(new_url)
